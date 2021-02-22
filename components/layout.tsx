@@ -3,9 +3,25 @@ import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
+import { makeStyles, Theme } from "@material-ui/core";
 
 const name = "[Your Name]";
 export const siteTitle = "Next.js Sample Website";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  app: {
+    minHeight: "100vh",
+    height: "100%",
+    backgroundColor: "#252528",
+    padding: `${0} ${20}px`,
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      padding: 0,
+    },
+    margin: "auto",
+    textAlign: "center",
+  },
+}));
 
 export default function Layout({
   children,
@@ -14,8 +30,9 @@ export default function Layout({
   children: React.ReactNode;
   home?: boolean;
 }) {
+  const classes = useStyles();
   return (
-    <div className={styles.container}>
+    <div className={classes.app}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -31,7 +48,7 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         {home ? (
           <>
             <Image
@@ -65,8 +82,8 @@ export default function Layout({
             </h2>
           </>
         )}
-      </header>
-      <main>{children}</main>
+      </header> */}
+      <main className={classes.app}>{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">

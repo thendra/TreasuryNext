@@ -1,5 +1,6 @@
 export default {
   h1: {
+    color: "#FFFFFF",
     fontFamily: "Montserrat",
     fontWeight: 700,
     fontSize: "73px",

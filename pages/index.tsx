@@ -1,14 +1,46 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
-import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
-import Date from "../components/date";
 import { withApollo } from "../lib/withApollo";
-import { GetStaticProps } from "next";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import React from "react";
+import { Box, Hidden, makeStyles, Theme } from "@material-ui/core";
+import { useFetchUser } from "../lib/user";
+import LoginButton from "../components/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  navBar: {
+    display: "flex",
+    color: "#fff",
+  },
+  media: {
+    height: 200,
+  },
+  bottomNav: {
+    position: "fixed",
+    bottom: 0,
+    width: "100vw",
+    backgroundColor: "#38302e",
+    "& span": {
+      color: "#fff",
+    },
+  },
+  landingImage: {
+    marginRight: "-20px",
+    width: "calc(50% + 20px)",
+    [theme.breakpoints.down("md")]: {
+      width: "50%",
+      marginRight: 0,
+    },
+    height: "100vh",
+    right: 0,
+    top: 0,
+    backgroundImage: "url(images/camera.jpg)",
+    backgroundSize: "cover",
+  },
+}));
 
 const GET_MY_TODOS = gql`
   query getMyTodos {
@@ -25,37 +57,49 @@ const GET_MY_TODOS = gql`
 `;
 
 const Home = () => {
-  const { loading, error, data } = useQuery(GET_MY_TODOS);
+  /// TO DO - fix users
+  const { user } = useAuth0();
 
+  console.log(user);
+  const classes = useStyles();
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <Typography variant="h1">Hello there!</Typography>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{" "}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {data?.todos.map(({ id, created_at, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
-              </Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={created_at} />
-              </small>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Box display="flex" flexWrap="wrap">
+        <Box
+          flex="1"
+          padding={4}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box maxWidth="500px">
+            <Box paddingBottom="50px">
+              <Typography variant="h1" align="left">
+                Treasury
+              </Typography>
+            </Box>
+            <Box paddingBottom="50px">
+              <Typography variant="h2" align="left">
+                Keep track of your collections in one convenient place.
+              </Typography>
+            </Box>
+            {!user ? (
+              <Box display="flex">
+                <LoginButton />
+              </Box>
+            ) : (
+              <Typography variant="h2">{user?.name}</Typography>
+            )}
+          </Box>
+        </Box>
+        <Hidden smDown>
+          <Box className={classes.landingImage} />
+        </Hidden>
+      </Box>
     </Layout>
   );
 };
