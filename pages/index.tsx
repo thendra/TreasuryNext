@@ -3,6 +3,7 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
+import Typography from "@material-ui/core/Typography";
 import Date from "../components/date";
 import { GetStaticProps } from "next";
 
@@ -21,6 +22,7 @@ export default function Home({
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
+        <Typography variant="h1">Hello there!</Typography>
         <p>[Your Self Introduction]</p>
         <p>
           (This is a sample website - you’ll be building a site like this in{" "}
