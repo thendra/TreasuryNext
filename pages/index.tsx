@@ -8,6 +8,7 @@ import React from "react";
 import { Box, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { useFetchUser } from "../lib/user";
 import LoginButton from "../components/LoginButton";
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -58,7 +59,9 @@ const GET_MY_TODOS = gql`
 
 const Home = () => {
   /// TO DO - fix users
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
+
+  const { user, loading } = useFetchUser();
 
   console.log(user);
   const classes = useStyles();
@@ -92,7 +95,7 @@ const Home = () => {
                 <LoginButton />
               </Box>
             ) : (
-              <Typography variant="h2">{user?.name}</Typography>
+              <Typography variant="h2"> Welcome back {user?.name}</Typography>
             )}
           </Box>
         </Box>

@@ -18,15 +18,15 @@ const requestAccessToken = async () => {
   }
 };
 // remove cached token on 401 from the server
-// const resetTokenLink = onError(({ networkError }) => {
-//   if (
-//     networkError &&
-//     networkError.name === "ServerError" &&
-//     networkError.statusCode === 401
-//   ) {
-//     accessToken = null;
-//   }
-// });
+const resetTokenLink = onError(({ networkError }) => {
+  if (
+    networkError &&
+    networkError.name === "ServerError" &&
+    networkError.statusCode === 401
+  ) {
+    accessToken = null;
+  }
+});
 const createHttpLink = (headers) => {
   const httpLink = new HttpLink({
     uri: "https://cheerful-possum-15.hasura.app/v1/graphql",
