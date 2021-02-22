@@ -5,17 +5,28 @@ import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
 import Date from "../components/date";
+import { withApollo } from "../lib/withApollo";
 import { GetStaticProps } from "next";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
-export default function Home({
-  allPostsData,
-}: {
-  allPostsData: {
-    date: string;
-    title: string;
-    id: string;
-  }[];
-}) {
+const GET_MY_TODOS = gql`
+  query getMyTodos {
+    todos(
+      where: { is_public: { _eq: false } }
+      order_by: { created_at: desc }
+    ) {
+      id
+      title
+      created_at
+      is_completed
+    }
+  }
+`;
+
+const Home = () => {
+  const { loading, error, data } = useQuery(GET_MY_TODOS);
+
   return (
     <Layout home>
       <Head>
@@ -32,14 +43,14 @@ export default function Home({
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {data?.todos.map(({ id, created_at, title }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href={`/posts/${id}`}>
                 <a>{title}</a>
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} />
+                <Date dateString={created_at} />
               </small>
             </li>
           ))}
@@ -47,13 +58,15 @@ export default function Home({
       </section>
     </Layout>
   );
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
 };
+
+export default withApollo()(Home);
+
+// export const getServerSideProps: GetStaticProps = async () => {
+//   const allPostsData = getSortedPostsData();
+//   return {
+//     props: {
+//       allPostsData,
+//     },
+//   };
+// };

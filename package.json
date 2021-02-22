@@ -8,17 +8,26 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
+    "@apollo/react-ssr": "^4.0.0",
+    "@auth0/nextjs-auth0": "0.13.0",
+    "apollo-boost": "^0.4.9",
+    "apollo-link-ws": "^1.0.20",
+    "isomorphic-unfetch": "3.0.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.3",
     "@types/material-ui": "^0.21.8",
     "date-fns": "^2.11.1",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.11.0",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "remark": "^12.0.0",
-    "remark-html": "^12.0.0"
+    "remark-html": "^12.0.0",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
