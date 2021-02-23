@@ -1,15 +1,12 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
-import { getSortedPostsData } from "../lib/posts";
 import Typography from "@material-ui/core/Typography";
 import { withApollo } from "../lib/withApollo";
-import gql from "graphql-tag";
 import React from "react";
-import { Box, Hidden, makeStyles, Theme } from "@material-ui/core";
+import { Box, Button, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { useFetchUser } from "../lib/user";
 import LoginButton from "../components/LoginButton";
-
-import { useAuth0 } from "@auth0/auth0-react";
+import Router from "next/router";
 
 const useStyles = makeStyles((theme: Theme) => ({
   navBar: {
@@ -43,27 +40,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const GET_MY_TODOS = gql`
-  query getMyTodos {
-    todos(
-      where: { is_public: { _eq: false } }
-      order_by: { created_at: desc }
-    ) {
-      id
-      title
-      created_at
-      is_completed
-    }
-  }
-`;
-
 const Home = () => {
-  /// TO DO - fix users
-  // const { user } = useAuth0();
-
   const { user, loading } = useFetchUser();
-
-  console.log(user);
   const classes = useStyles();
   return (
     <Layout home>
@@ -95,7 +73,24 @@ const Home = () => {
                 <LoginButton />
               </Box>
             ) : (
-              <Typography variant="h2"> Welcome back {user?.name}</Typography>
+              <>
+                <Typography variant="h2"> Welcome back {user?.name}</Typography>
+                <Box
+                  marginTop={3}
+                  component={(props) => (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      {...props}
+                      onClick={() => {
+                        Router.push("/items");
+                      }}
+                    />
+                  )}
+                >
+                  View Items
+                </Box>
+              </>
             )}
           </Box>
         </Box>

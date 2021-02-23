@@ -25,7 +25,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
       </Head>
       {/* Not sure if this is the right approach */}
-      <Auth0Provider
+      {/* <Auth0Provider
         // domain="dev-mipf43mo.eu.auth0.com"
         domain="dev-axkwk09j.eu.auth0.com"
         // clientId="cAjFZxpGeOuCMXFeNYqT87oQuLL2UgEI"
@@ -35,13 +35,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         // audience="https://dev-mipf43mo.eu.auth0.com/api/v2/"
         audience="https://dev-axkwk09j.eu.auth0.com/api/v2/"
         scope="read:current_user update:current_user_metadata"
-      >
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </Auth0Provider>
+      > */}
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+      {/* </Auth0Provider> */}
     </>
   );
 };

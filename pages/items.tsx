@@ -31,19 +31,22 @@ const GET_ITEMS = gql`
 const Items = () => {
   const { loading, error, data } = useQuery(GET_ITEMS);
 
-  console.log(data);
   return (
     <Layout>
       <Typography variant="h1">Your Items</Typography>
       <Box display="flex" flexWrap="wrap" justifyContent="center">
-        {data?.Items.map(({ id, title, image_url, created_by }: IItems) => (
-          <ItemSummary
-            id={id}
-            title={title}
-            image_url={image_url}
-            created_by={created_by}
-          />
-        ))}
+        {loading ? (
+          <Typography variant="h2">Loading...</Typography>
+        ) : (
+          data?.Items.map(({ id, title, image_url, created_by }: IItems) => (
+            <ItemSummary
+              id={id}
+              title={title}
+              image_url={image_url}
+              created_by={created_by}
+            />
+          ))
+        )}
       </Box>
     </Layout>
   );
