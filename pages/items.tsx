@@ -36,14 +36,14 @@ const Items = () => {
     <Layout>
       <Typography variant="h1">Your Items</Typography>
       <Box display="flex" flexWrap="wrap" justifyContent="center">
-        {/* {data?.Items.map(({ id, title, image_url, created_by }: IItems) => (
+        {data?.Items.map(({ id, title, image_url, created_by }: IItems) => (
           <ItemSummary
             id={id}
             title={title}
             image_url={image_url}
             created_by={created_by}
           />
-        ))} */}
+        ))}
       </Box>
     </Layout>
   );
