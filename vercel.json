@@ -1,13 +1,13 @@
 {
   "build": {
     "env": {
-      "DOMAIN": "https://treasury-next-6tlo1hh6a-thendra.vercel.app",
+      "DOMAIN": "https://treasury-next.vercel.app/",
       "AUTH0_DOMAIN": "dev-axkwk09j.eu.auth0.com",
       "AUTH0_AUDIENCE": "hasura",
       "AUTH0_CLIENT_ID": "hOCTDn5awbhB03LHo8o6bR1HjWxmGVaG",
       "AUTH0_CLIENT_SECRET": "@auth0_treasury_client_secret",
-      "REDIRECT_URI": "https://treasury-next-6tlo1hh6a-thendra.vercel.app/api/callback",
-      "POST_LOGOUT_REDIRECT_URI": "https://treasury-next-6tlo1hh6a-thendra.vercel.app",
+      "REDIRECT_URI": "https://treasury-next.vercel.app/api/callback",
+      "POST_LOGOUT_REDIRECT_URI": "https://treasury-next.vercel.app/",
       "SESSION_COOKIE_SECRET": "@session_cookie_secret"
     }
   }
