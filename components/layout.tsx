@@ -5,8 +5,7 @@ import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import { makeStyles, Theme } from "@material-ui/core";
 
-const name = "[Your Name]";
-export const siteTitle = "Next.js Sample Website";
+export const siteTitle = "Treasury with Next.js";
 
 const useStyles = makeStyles((theme: Theme) => ({
   app: {
@@ -37,7 +36,7 @@ export default function Layout({
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content="Keep track of your collections whilst benefitting from the wonders of server side rendering."
         />
         <meta
           property="og:image"
