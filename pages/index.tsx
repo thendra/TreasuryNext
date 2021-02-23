@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Home = () => {
-  const { user, loading } = useFetchUser();
+  const { user } = useFetchUser();
   const classes = useStyles();
   return (
     <Layout home>
@@ -74,21 +74,19 @@ const Home = () => {
               </Box>
             ) : (
               <>
-                <Typography variant="h2"> Welcome back {user?.name}</Typography>
-                <Box
-                  marginTop={3}
-                  component={(props) => (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      {...props}
-                      onClick={() => {
-                        Router.push("/items");
-                      }}
-                    />
-                  )}
-                >
-                  View Items
+                <Box marginTop={3} display="flex" alignItems="center">
+                  <Typography variant="h2">
+                    Welcome back {user?.name} &nbsp;
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      Router.push("/items");
+                    }}
+                  >
+                    View Items
+                  </Button>
                 </Box>
               </>
             )}
@@ -102,13 +100,4 @@ const Home = () => {
   );
 };
 
-export default withApollo()(Home);
-
-// export const getServerSideProps: GetStaticProps = async () => {
-//   const allPostsData = getSortedPostsData();
-//   return {
-//     props: {
-//       allPostsData,
-//     },
-//   };
-// };
+export default Home;
