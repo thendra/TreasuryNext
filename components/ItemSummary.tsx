@@ -90,9 +90,9 @@ const ItemSummary = ({ id, title, image_url, created_by }: IItemSummary) => {
   return (
     <Box className={classes.container}>
       <Box className={classes.card}>
-        <Link href={`/${id}`}>
-          <img className="mainImage" src={image_url || ""} alt={title || ""} />
-        </Link>
+        {/* <Link href={`/${id}`}> */}
+        <img className="mainImage" src={image_url || ""} alt={title || ""} />
+        {/* </Link> */}
         <Box className={classes.details}>
           <Typography variant="h5">{title}</Typography>
         </Box>
