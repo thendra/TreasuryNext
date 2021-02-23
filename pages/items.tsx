@@ -1,7 +1,9 @@
 import { useQuery } from "@apollo/react-hooks";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Fab, Typography } from "@material-ui/core";
 import gql from "graphql-tag";
-import React from "react";
+import AddIcon from "@material-ui/icons/Add";
+import React, { useState } from "react";
+import AddItemForm from "../components/AddItemForm";
 import ItemSummary from "../components/ItemSummary";
 import Layout from "../components/layout";
 import { withApollo } from "../lib/withApollo";
@@ -30,6 +32,7 @@ const GET_ITEMS = gql`
 
 const Items = () => {
   const { loading, error, data } = useQuery(GET_ITEMS);
+  const [addItemFormOpen, setAddItemFormOpen] = useState(false);
 
   return (
     <Layout>
@@ -48,6 +51,19 @@ const Items = () => {
           ))
         )}
       </Box>
+      <Box position="fixed" bottom={50} right={40}>
+        <Fab
+          onClick={() => setAddItemFormOpen(true)}
+          color="primary"
+          aria-label="add"
+        >
+          <AddIcon />
+        </Fab>
+      </Box>
+      <AddItemForm
+        open={addItemFormOpen}
+        onClose={() => setAddItemFormOpen(false)}
+      />
     </Layout>
   );
 };

@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ApolloProvider } from "@apollo/react-hooks";
 import createApolloClient from "./apolloClient";
 import auth0 from "./auth0";
+import { useFetchUser } from "./user";
 // On the client, we store the Apollo Client in the following variable.
 // This prevents the client from reinitializing between page transitions.
 let globalApolloClient = null;
@@ -47,9 +48,11 @@ async function getHeaders(ctx) {
   if (typeof window !== "undefined") return null;
   if (typeof ctx.req === "undefined") return null;
   const s = await auth0.getSession(ctx.req);
+
   if (s && s.accessToken == null) return null;
   return {
     authorization: `Bearer ${s ? s.accessToken : ""}`,
+    "x-hasura-user-id": `${s ? s.user?.sub : ""}`,
   };
 }
 /**

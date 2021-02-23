@@ -6,13 +6,19 @@ import { onError } from "apollo-link-error";
 import { WebSocketLink } from "apollo-link-ws";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import auth0 from "./auth0";
+
 let accessToken = null;
+let userId = null;
 const requestAccessToken = async () => {
   if (accessToken) return;
   const res = await fetch(`${process.env.APP_HOST}/api/session`);
+  const profile = await fetch(`${process.env.APP_HOST}/api/me`);
   if (res.ok) {
     const json = await res.json();
+    console.log(json);
     accessToken = json.accessToken;
+    userId = profile ? await profile.json() : "";
+    console.log(userId);
   } else {
     accessToken = "public";
   }
@@ -23,6 +29,7 @@ const resetTokenLink = onError(({ networkError }) => {
     accessToken = null;
   }
 });
+
 const createHttpLink = (headers) => {
   const httpLink = new HttpLink({
     uri: "https://cheerful-possum-15.hasura.app/v1/graphql",
@@ -42,6 +49,7 @@ const createWSLink = () => {
         return {
           headers: {
             authorization: accessToken ? `Bearer ${accessToken}` : "",
+            "x-hasura-user-id": `${userId ? userId?.sub : ""}`,
           },
         };
       },
