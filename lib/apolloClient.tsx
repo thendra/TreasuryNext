@@ -5,7 +5,6 @@ import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 import { WebSocketLink } from "apollo-link-ws";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import auth0 from "./auth0";
 
 let accessToken = null;
 let userId = null;
@@ -15,10 +14,8 @@ const requestAccessToken = async () => {
   const profile = await fetch(`${process.env.APP_HOST}/api/me`);
   if (res.ok) {
     const json = await res.json();
-    console.log(json);
     accessToken = json.accessToken;
     userId = profile ? await profile.json() : "";
-    console.log(userId);
   } else {
     accessToken = "public";
   }

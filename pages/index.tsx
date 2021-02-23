@@ -1,12 +1,11 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import Typography from "@material-ui/core/Typography";
-import { withApollo } from "../lib/withApollo";
 import React from "react";
 import { Box, Button, Hidden, makeStyles, Theme } from "@material-ui/core";
 import { useFetchUser } from "../lib/user";
 import LoginButton from "../components/LoginButton";
-import Router from "next/router";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   navBar: {
@@ -40,7 +39,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Home = ({ user }) => {
+const Home = () => {
+  const { user } = useFetchUser();
   const classes = useStyles();
   return (
     <Layout home>
@@ -83,15 +83,11 @@ const Home = ({ user }) => {
                     Welcome back {user?.name} &nbsp;
                   </Typography>
                   <Box paddingY={2}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        Router.push("/items");
-                      }}
-                    >
-                      View Items
-                    </Button>
+                    <Link href="/items">
+                      <Button variant="contained" color="primary">
+                        View Items
+                      </Button>
+                    </Link>
                   </Box>
                 </Box>
               </>
@@ -105,14 +101,5 @@ const Home = ({ user }) => {
     </Layout>
   );
 };
-
-export async function getStaticProps() {
-  const { user } = useFetchUser();
-  return {
-    props: {
-      user,
-    },
-  };
-}
 
 export default Home;

@@ -31,7 +31,7 @@ const GET_ITEMS = gql`
 `;
 
 const Items = () => {
-  const { loading, error, data } = useQuery(GET_ITEMS);
+  const { loading, data } = useQuery(GET_ITEMS);
   const [addItemFormOpen, setAddItemFormOpen] = useState(false);
 
   return (

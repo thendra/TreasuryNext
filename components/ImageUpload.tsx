@@ -29,7 +29,6 @@ const ImageUpload = ({ label, onUpload, setImageLoading }: IImageUpload) => {
       }
 
       if (response.body.secure_url !== "") {
-        console.log(response);
         onUpload(response.body.secure_url);
       }
     });
