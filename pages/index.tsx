@@ -40,8 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Home = () => {
-  const { user } = useFetchUser();
+const Home = ({ user }) => {
   const classes = useStyles();
   return (
     <Layout home>
@@ -106,5 +105,14 @@ const Home = () => {
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const { user } = useFetchUser();
+  return {
+    props: {
+      user,
+    },
+  };
+}
 
 export default Home;
