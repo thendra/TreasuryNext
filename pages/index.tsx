@@ -69,24 +69,31 @@ const Home = () => {
               </Typography>
             </Box>
             {!user ? (
-              <Box display="flex">
+              <Box>
                 <LoginButton />
               </Box>
             ) : (
               <>
-                <Box marginTop={3} display="flex" alignItems="center">
+                <Box
+                  marginTop={3}
+                  display="flex"
+                  flexWrap="wrap"
+                  alignItems="center"
+                >
                   <Typography variant="h2">
                     Welcome back {user?.name} &nbsp;
                   </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      Router.push("/items");
-                    }}
-                  >
-                    View Items
-                  </Button>
+                  <Box paddingY={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        Router.push("/items");
+                      }}
+                    >
+                      View Items
+                    </Button>
+                  </Box>
                 </Box>
               </>
             )}
