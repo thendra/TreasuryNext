@@ -19,11 +19,7 @@ const requestAccessToken = async () => {
 };
 // remove cached token on 401 from the server
 const resetTokenLink = onError(({ networkError }) => {
-  if (
-    networkError &&
-    networkError.name === "ServerError" &&
-    networkError.statusCode === 401
-  ) {
+  if (networkError && networkError.name === "ServerError") {
     accessToken = null;
   }
 });
