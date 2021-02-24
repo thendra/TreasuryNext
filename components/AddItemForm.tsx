@@ -65,7 +65,6 @@ const ADD_ITEM = gql`
 
 const AddItemForm = ({ open, onClose }: IAddItemForm) => {
   const { user } = useFetchUser();
-  console.log(user);
   const [addItem] = useMutation(ADD_ITEM);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
