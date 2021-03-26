@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   landingImage: {
-    marginRight: "-20px",
+    marginRight: "-40px",
     width: "calc(50% + 20px)",
     [theme.breakpoints.down("md")]: {
       width: "50%",
