@@ -3,7 +3,7 @@ schema:
   - https://cheerful-possum-15.hasura.app/v1/graphql:
       headers:
         content-type: application/json
-        x-hasura-admin-secret: hendra
+        x-hasura-admin-secret: ${REACT_APP_HASURA_ADMIN_SECRET}
         x-hasura-role: admin
 documents: "**/**/*.tsx"
 generates:
