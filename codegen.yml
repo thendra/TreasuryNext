@@ -1,0 +1,18 @@
+overwrite: true
+schema:
+  - https://cheerful-possum-15.hasura.app/v1/graphql:
+      headers:
+        content-type: application/json
+        x-hasura-admin-secret: hendra
+        x-hasura-role: admin
+documents: "**/**/*.tsx"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "fragment-matcher"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

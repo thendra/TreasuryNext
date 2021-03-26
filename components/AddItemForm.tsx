@@ -6,31 +6,17 @@ import {
   Typography,
   Dialog,
   CircularProgress,
-  Checkbox,
 } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import { useMutation } from "@apollo/client";
 import { useFetchUser } from "../lib/user";
 import { gql } from "@apollo/react-hooks";
 import ImageUpload from "./ImageUpload";
+import { GetItemsDocument, useAdditemMutation } from "../src/generated/graphql";
 
 interface IAddItemForm {
   open: boolean;
   onClose: () => void;
 }
-
-const GET_ITEMS = gql`
-  query GetItems {
-    Items {
-      id
-      title
-      description
-      image_url
-      created_by
-      is_public
-    }
-  }
-`;
 
 const ADD_ITEM = gql`
   mutation ADDITEM(
@@ -45,61 +31,68 @@ const ADD_ITEM = gql`
       objects: {
         id: $id
         title: $title
-        description: $description
+        # description: $description
         image_url: $image_url
         created_by: $user_id
-        is_public: $is_public
+        # is_public: $is_public
       }
     ) {
       returning {
         id
         title
-        description
+        # description
         image_url
         created_by
-        is_public
+        # is_public
       }
     }
   }
 `;
 
+/**
+ * Form for a user to add a new item to their Items dashboard
+ */
 const AddItemForm = ({ open, onClose }: IAddItemForm) => {
   const { user } = useFetchUser();
-  const [addItem] = useMutation(ADD_ITEM);
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [isPublic, setIsPublic] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const [isPublic, setIsPublic] = useState(false);
+  const [additemMutation] = useAdditemMutation({
+    variables: {
+      id: uuidv4(),
+      title,
+      // description: description,
+      image_url: imageUrl,
+      user_id: user?.sub,
+      // is_public: isPublic,
+    },
+  });
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setTitle(event.target.value);
   };
 
-  const handleDescChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setDescription(event.target.value);
-  };
-  const handleIsPublicChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPublic(event.target.checked);
-  };
+  // NOT REQUIRED: This will be used when ItemDetailed component has been integrated
+  // const handleDescChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   event.preventDefault();
+  //   setDescription(event.target.value);
+  // };
+
+  // NOT REQUIRED: This will be used when ItemDetailed component has been integrated
+  // const handleIsPublicChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsPublic(event.target.checked);
+  // };
 
   const handleAddItem = (event: React.FormEvent) => {
     event.preventDefault();
-    addItem({
-      variables: {
-        id: uuidv4(),
-        title: title,
-        description: description,
-        image_url: imageUrl,
-        user_id: user?.sub,
-        is_public: isPublic,
-      },
-      refetchQueries: [{ query: GET_ITEMS }],
+    additemMutation({
+      refetchQueries: [{ query: GetItemsDocument }],
     });
     setTitle("");
-    setDescription("");
+    // setDescription("");
     setImageUrl("");
   };
 
@@ -130,7 +123,8 @@ const AddItemForm = ({ open, onClose }: IAddItemForm) => {
               color="primary"
             />
           </Box>
-          <Box display="flex" justifyContent="center" my={2}>
+          {/*NOT REQUIRED: This will be used when ItemDetailed component has been integrated
+           <Box display="flex" justifyContent="center" my={2}>
             <TextField
               value={description}
               variant="outlined"
@@ -140,7 +134,7 @@ const AddItemForm = ({ open, onClose }: IAddItemForm) => {
               onChange={handleDescChange}
               color="primary"
             />
-          </Box>
+          </Box> */}
           <Box display="flex" justifyContent="center" pb={2}>
             <ImageUpload
               label="Main image"
@@ -148,6 +142,7 @@ const AddItemForm = ({ open, onClose }: IAddItemForm) => {
               onUpload={setImageUrl}
             />
           </Box>
+          {/*NOT REQUIRED: This will be used when ItemDetailed component has been integrated
           <Box
             display="flex"
             justifyContent="center"
@@ -160,7 +155,7 @@ const AddItemForm = ({ open, onClose }: IAddItemForm) => {
               inputProps={{ "aria-label": "primary checkbox" }}
             />
             <Typography variant="caption">Make Public</Typography>
-          </Box>
+          </Box> */}
           <Box display="flex" justifyContent="center" pb={2}>
             <Button
               variant="contained"

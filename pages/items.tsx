@@ -7,15 +7,7 @@ import AddItemForm from "../components/AddItemForm";
 import ItemSummary from "../components/ItemSummary";
 import Layout from "../components/layout";
 import { withApollo } from "../lib/withApollo";
-
-interface IItems {
-  created_by?: "String";
-  description?: "String";
-  id: "String";
-  image_url?: "String";
-  is_public?: "Boolean";
-  title: "String";
-}
+import { GetItemsQuery, Items } from "../src/generated/graphql";
 
 const GET_ITEMS = gql`
   query GetItems {
@@ -30,8 +22,13 @@ const GET_ITEMS = gql`
   }
 `;
 
-const Items = () => {
-  const { loading, data } = useQuery(GET_ITEMS);
+/**
+ * Items page statically rendered at /items with client side data fetching and graphql query caching via withApollo HOC
+ *
+ * TODO: Add funcionality for viewing all 'public' items as well as 'private' items created by the current user
+ **/
+const ItemsPage = () => {
+  const { loading, data } = useQuery<GetItemsQuery>(GET_ITEMS);
   const [addItemFormOpen, setAddItemFormOpen] = useState(false);
 
   return (
@@ -41,13 +38,8 @@ const Items = () => {
         {loading ? (
           <Typography variant="h2">Loading...</Typography>
         ) : (
-          data?.Items.map(({ id, title, image_url, created_by }: IItems) => (
-            <ItemSummary
-              id={id}
-              title={title}
-              image_url={image_url}
-              created_by={created_by}
-            />
+          data?.Items.map(({ title, image_url }: Items) => (
+            <ItemSummary title={title} image_url={image_url} />
           ))
         )}
       </Box>
@@ -68,4 +60,4 @@ const Items = () => {
   );
 };
 
-export default withApollo()(Items);
+export default withApollo()(ItemsPage);

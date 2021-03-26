@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Fab, Typography, Theme } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
-import Link from "next/link";
+import { Items } from "../src/generated/graphql";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -74,29 +73,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface IItemSummary {
-  __typename?: "Items";
-  created_by?: "String";
-  description?: "String";
-  id: "String";
-  image_url?: "String";
-  is_public?: "Boolean";
-  title: "String";
-}
-
-const ItemSummary = ({ id, title, image_url, created_by }: IItemSummary) => {
+/**
+ * Summary display component for a created item
+ *
+ * TODO: Add link to detailed display to make use of description and is public fields, add support for authorised viewing using created_by field, add deletion funcionality
+ */
+const ItemSummary = ({
+  title,
+  image_url,
+}: Pick<Items, "image_url" | "title">) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.container}>
       <Box className={classes.card}>
-        {/* <Link href={`/${id}`}> */}
         <img
           className="mainImage"
           src={image_url || "/images/placeholder-image.jpg"}
           alt={title || ""}
         />
-        {/* </Link> */}
         <Box className={classes.details}>
           <Typography variant="h5">{title}</Typography>
         </Box>
